@@ -21,38 +21,47 @@ public class GameRunner {
     public int getFps() {
         return this.fps;
     }
-
     public void addLoopStartListener(LoopStartListener listener) {
         this.listeners.add(listener);
     }
 
+    /**
+     * Starts the game loop.
+     */
     public void start() {
-        this.running = true;
+        if (!this.running)
+        {
+            this.running = true;
 
-        this.thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (running)
-                {
-                    for (LoopStartListener listener : listeners)
+            this.thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (running)
                     {
-                        listener.onLoopStarted();
-                    }
+                        for (LoopStartListener listener : listeners)
+                        {
+                            listener.onLoopStarted();
+                        }
 
-                    try
-                    {
-                        Thread.sleep(100);
-                    }
-                    catch (InterruptedException e)
-                    {
+                        try
+                        {
+                            Thread.sleep(100);
+                        }
+                        catch (InterruptedException e)
+                        {
 
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
         this.thread.start();
     }
+
+    /**
+     * Stops the game loop.
+     */
     public void stop() {
         if (this.thread != null)
         {
