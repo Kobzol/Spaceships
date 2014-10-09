@@ -6,4 +6,5 @@ package kobzol.spaceships.controller;
  * GameController runs the main game loop and contains all of the game objects.
  */
 public class GameController {
+
 }
