@@ -2,6 +2,8 @@ language: android
 
 before_install:
  - chmod +x gradlew
+ - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
+ - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
 
 android:
   components:
@@ -21,3 +23,4 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - addon-google_apis-google-19
+    - com.android.support:appcompat-v7:20.0.0
