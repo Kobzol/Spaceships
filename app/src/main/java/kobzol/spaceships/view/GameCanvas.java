@@ -2,8 +2,12 @@ package kobzol.spaceships.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Canvas on which the whole game is drawn.
@@ -11,8 +15,12 @@ import android.view.SurfaceView;
  * Receives and delegates user input.
  */
 public class GameCanvas extends SurfaceView implements SurfaceHolder.Callback {
+    private final List<OnGenericMotionListener> inputListeners;
+
     public GameCanvas(Context context) {
         super(context);
+
+        this.inputListeners = new ArrayList<OnGenericMotionListener>();
     }
 
     @Override
@@ -30,11 +38,33 @@ public class GameCanvas extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    public void addInputListener(OnGenericMotionListener listener) {
+        this.inputListeners.add(listener);
+    }
+
+    /**
+     * Returns a canvas on which can be drawn.
+     * @return canvas for drawing
+     */
     public Canvas startDrawing() {
         return this.getHolder().lockCanvas(null);
     }
 
+    /**
+     * Locks the canvas and display the changes on the screen.
+     * @param canvas canvas with new pixels
+     */
     public void stopDrawing(Canvas canvas) {
+        this.getHolder().unlockCanvasAndPost(canvas);
+    }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        for (OnGenericMotionListener listener : this.inputListeners)
+        {
+            listener.onGenericMotion(this, event);
+        }
+
+        return true;
     }
 }

@@ -1,11 +1,13 @@
 package kobzol.spaceships.controller;
 
 import android.app.Activity;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import kobzol.spaceships.model.GameObject;
+import kobzol.spaceships.view.GameCanvas;
 
 /**
  * Creates and controls the game.
@@ -18,6 +20,7 @@ public class GameController {
     private GameState gameState;
     private List<GameObject> objects;
     private final GameRunner gameRunner;
+    private final GameCanvas gameCanvas;
 
     private final Activity context;
 
@@ -32,6 +35,9 @@ public class GameController {
                 updateAll();
             }
         });
+
+        this.gameCanvas = new GameCanvas(context);
+        context.setContentView(this.gameCanvas);
 
         this.context = context;
     }
@@ -60,5 +66,13 @@ public class GameController {
         {
             object.update();
         }
+    }
+
+    /**
+     * Updates the models according to the input.
+     * @param event touch event from the user
+     */
+    private void updateInput(MotionEvent event) {
+
     }
 }
