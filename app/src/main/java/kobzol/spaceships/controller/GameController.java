@@ -1,9 +1,9 @@
 package kobzol.spaceships.controller;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import kobzol.spaceships.view.GameCanvas;
  * GameController runs the main game loop and contains all of the game objects.
  */
 public class GameController {
-    public static final int GAME_FPS = 50;
+    public static final int GAME_FPS = 25;
 
     private GameState gameState;
     private List<GameObject> objects;
@@ -90,6 +90,8 @@ public class GameController {
         {
             object.update();
         }
+
+        Log.i("Game loop", "Game updated");
     }
 
     /**
@@ -97,6 +99,6 @@ public class GameController {
      * @param event touch event from the user
      */
     private void updateInput(MotionEvent event) {
-        Toast.makeText(this.context, "Touch event fired", Toast.LENGTH_SHORT).show();
+
     }
 }

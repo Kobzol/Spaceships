@@ -1,5 +1,7 @@
 package kobzol.spaceships.controller;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +34,13 @@ public class GameRunner {
         if (!this.running)
         {
             this.running = true;
-
             this.thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    final int skipFrames = 1000 / fps;
+                    long nextFrameTime = getCurrentTime();
+                    long sleepTime;
+
                     while (running)
                     {
                         for (LoopStartListener listener : listeners)
@@ -43,13 +48,23 @@ public class GameRunner {
                             listener.onLoopStarted();
                         }
 
-                        try
-                        {
-                            Thread.sleep(100);
-                        }
-                        catch (InterruptedException e)
-                        {
+                        nextFrameTime += skipFrames;
+                        sleepTime = nextFrameTime - getCurrentTime();
 
+                        if (sleepTime > 0)
+                        {
+                            try
+                            {
+                                Thread.sleep(sleepTime);
+                            }
+                            catch (InterruptedException e)
+                            {
+
+                            }
+                        }
+                        else
+                        {
+                            Log.w("Game loop", "Game lagging");
                         }
                     }
                 }
@@ -57,6 +72,10 @@ public class GameRunner {
         }
 
         this.thread.start();
+    }
+
+    private long getCurrentTime() {
+        return System.nanoTime() / 1000000;
     }
 
     /**
