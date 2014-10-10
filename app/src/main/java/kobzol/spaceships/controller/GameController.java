@@ -3,6 +3,7 @@ package kobzol.spaceships.controller;
 import android.app.Activity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,6 @@ public class GameController {
      * @param event touch event from the user
      */
     private void updateInput(MotionEvent event) {
-
+        Toast.makeText(this.context, "Touch event fired", Toast.LENGTH_SHORT).show();
     }
 }
