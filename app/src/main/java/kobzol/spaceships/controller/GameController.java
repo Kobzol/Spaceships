@@ -47,9 +47,23 @@ public class GameController {
                 return true;
             }
         });
-        context.setContentView(this.gameCanvas);
 
         this.context = context;
+    }
+
+    /**
+     * Registers and displays the game canvas at the given context.
+     * @param context activity
+     */
+    public void registerContentView(Activity context) {
+        context.setContentView(this.gameCanvas);
+    }
+
+    /**
+     * Initializes the game (should be called only once).
+     */
+    public void initializeGame() {
+
     }
 
     /**
