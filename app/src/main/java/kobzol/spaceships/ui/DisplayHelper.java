@@ -13,7 +13,7 @@ public class DisplayHelper {
      * @param context context
      * @return display metrics
      */
-    public DisplayMetrics getDisplayMetrics(Context context) {
+    public static DisplayMetrics getDisplayMetrics(Context context) {
         DisplayMetrics metrics = new DisplayMetrics();
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
 

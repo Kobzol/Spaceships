@@ -2,12 +2,16 @@ package kobzol.spaceships.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kobzol.spaceships.model.Dimension;
+import kobzol.spaceships.ui.DisplayHelper;
 
 /**
  * Canvas on which the whole game is drawn.
@@ -16,11 +20,19 @@ import java.util.List;
  */
 public class GameCanvas extends SurfaceView implements SurfaceHolder.Callback {
     private final List<OnTouchListener> inputListeners;
+    private final Dimension dimension;
 
     public GameCanvas(Context context) {
         super(context);
 
         this.inputListeners = new ArrayList<OnTouchListener>();
+
+        DisplayMetrics dm = DisplayHelper.getDisplayMetrics(context);
+        this.dimension = new Dimension(dm.widthPixels, dm.heightPixels);
+    }
+
+    public Dimension getDimension() {
+        return this.dimension;
     }
 
     @Override
