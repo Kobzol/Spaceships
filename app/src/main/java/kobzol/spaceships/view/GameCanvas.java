@@ -15,12 +15,12 @@ import java.util.List;
  * Receives and delegates user input.
  */
 public class GameCanvas extends SurfaceView implements SurfaceHolder.Callback {
-    private final List<OnGenericMotionListener> inputListeners;
+    private final List<OnTouchListener> inputListeners;
 
     public GameCanvas(Context context) {
         super(context);
 
-        this.inputListeners = new ArrayList<OnGenericMotionListener>();
+        this.inputListeners = new ArrayList<OnTouchListener>();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class GameCanvas extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    public void addInputListener(OnGenericMotionListener listener) {
+    public void addInputListener(OnTouchListener listener) {
         this.inputListeners.add(listener);
     }
 
@@ -60,9 +60,9 @@ public class GameCanvas extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        for (OnGenericMotionListener listener : this.inputListeners)
+        for (OnTouchListener listener : this.inputListeners)
         {
-            listener.onGenericMotion(this, event);
+            listener.onTouch(this, event);
         }
 
         return true;

@@ -2,6 +2,7 @@ package kobzol.spaceships.controller;
 
 import android.app.Activity;
 import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,14 @@ public class GameController {
         });
 
         this.gameCanvas = new GameCanvas(context);
+        this.gameCanvas.setFocusable(true);
+        this.gameCanvas.addInputListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                updateInput(motionEvent);
+                return true;
+            }
+        });
         context.setContentView(this.gameCanvas);
 
         this.context = context;
