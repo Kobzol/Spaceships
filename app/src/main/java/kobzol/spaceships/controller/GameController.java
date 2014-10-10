@@ -1,6 +1,8 @@
 package kobzol.spaceships.controller;
 
 import android.app.Activity;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import kobzol.spaceships.model.GameBackground;
 import kobzol.spaceships.model.GameObject;
 import kobzol.spaceships.view.GameCanvas;
 
@@ -20,11 +23,13 @@ public class GameController {
     public static final int GAME_FPS = 25;
 
     private GameState gameState;
-    private List<GameObject> objects;
+
     private final GameRunner gameRunner;
     private final GameCanvas gameCanvas;
 
     private final Activity context;
+
+    private List<GameObject> objects;
 
     public GameController(Activity context) {
         this.gameState = GameState.CREATED;
@@ -63,7 +68,7 @@ public class GameController {
      * Initializes the game (should be called only once).
      */
     public void initializeGame() {
-
+        this.objects.add(new GameBackground());
     }
 
     /**
@@ -91,6 +96,22 @@ public class GameController {
             object.update();
         }
 
+        Canvas canvas = this.gameCanvas.startDrawing();
+
+        if (canvas != null)
+        {
+            canvas.drawColor(Color.BLACK);
+
+            synchronized (this.gameCanvas) {
+                for (GameObject object : this.objects)
+                {
+                    object.draw(canvas);
+                }
+            }
+
+            this.gameCanvas.stopDrawing(canvas);
+        }
+
         Log.i("Game loop", "Game updated");
     }
 
@@ -99,6 +120,9 @@ public class GameController {
      * @param event touch event from the user
      */
     private void updateInput(MotionEvent event) {
-
+        for (GameObject object : this.objects)
+        {
+            object.onTouch(event);
+        }
     }
 }
