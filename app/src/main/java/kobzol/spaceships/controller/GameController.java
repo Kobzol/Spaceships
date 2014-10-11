@@ -13,7 +13,6 @@ public class GameController {
     private GameState gameState;
 
     private final GameRunner gameRunner;
-    private final WorldController worldController;
 
     private final Activity context;
 
@@ -28,8 +27,6 @@ public class GameController {
             }
         });
 
-        this.worldController = new WorldController(context);
-
         this.context = context;
     }
 
@@ -38,14 +35,14 @@ public class GameController {
      * @param context activity
      */
     public void registerContentView(Activity context) {
-        this.worldController.registerContentView(context);
+
     }
 
     /**
      * Initializes the game (should be called only once).
      */
     public void initializeGame() {
-        this.worldController.initializeGame();
+
     }
 
     /**
@@ -68,6 +65,6 @@ public class GameController {
      * Updates all contained game objects and causes them to redraw themselves.
      */
     private void updateAll() {
-        this.worldController.updateAll();
+
     }
 }
