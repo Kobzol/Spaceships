@@ -39,13 +39,6 @@ public class Game {
     }
 
     /**
-     * Initializes the game (should be called only once).
-     */
-    public void initializeGame() {
-
-    }
-
-    /**
      * Starts the game.
      */
     public void start() {
