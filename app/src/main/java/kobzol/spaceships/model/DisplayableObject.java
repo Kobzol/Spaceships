@@ -26,7 +26,7 @@ public abstract class DisplayableObject implements Movable {
 
     @Override
     public void moveBy(float x, float y) {
-        this.location.set(this.location.x + x, this.location.y + y);
+        this.moveTo(this.location.x + x, this.location.y + y);
     }
 
     @Override

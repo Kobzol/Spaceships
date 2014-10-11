@@ -2,10 +2,12 @@ package kobzol.spaceships.controller;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 
 import kobzol.spaceships.R;
+import kobzol.spaceships.model.Background;
 import kobzol.spaceships.model.Spaceship;
 import kobzol.spaceships.ui.DisplayHelper;
 import kobzol.spaceships.view.GameCanvas;
@@ -18,6 +20,7 @@ public class SpaceDirector implements Director {
     private final Context context;
     private final GameCanvas gameCanvas;
 
+    private Background background;
     private Spaceship playerShip;
 
     public SpaceDirector(Context context, GameCanvas gameCanvas) {
@@ -35,16 +38,20 @@ public class SpaceDirector implements Director {
     }
 
     private void initializeWorld() {
+        this.background = new Background(DisplayHelper.loadBitmap(this.context, R.drawable.space_background));
         this.playerShip = new Spaceship(DisplayHelper.loadBitmap(this.context, R.drawable.player_ship));
     }
 
     @Override
     public void update() {
-
+        this.background.moveBy(-10, 0);
     }
 
     @Override
     public void draw(Canvas canvas) {
+        canvas.drawColor(Color.BLACK);
+
+        ObjectRenderer.renderTopLeft(canvas, this.background);
         ObjectRenderer.renderCentered(canvas, this.playerShip);
     }
 

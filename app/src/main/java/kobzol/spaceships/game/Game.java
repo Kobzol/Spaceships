@@ -12,7 +12,7 @@ import kobzol.spaceships.view.GameCanvas;
  * GameController runs the main game loop and contains all of the game objects.
  */
 public class Game {
-    public static final int GAME_FPS = 25;
+    public static final int GAME_FPS = 60;
 
     private GameState gameState;
 
