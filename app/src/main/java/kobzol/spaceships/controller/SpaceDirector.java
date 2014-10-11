@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 
+import kobzol.spaceships.R;
+import kobzol.spaceships.model.Spaceship;
+import kobzol.spaceships.ui.DisplayHelper;
 import kobzol.spaceships.view.GameCanvas;
 
 /**
@@ -13,6 +16,8 @@ import kobzol.spaceships.view.GameCanvas;
 public class SpaceDirector implements Director {
     private final Context context;
     private final GameCanvas gameCanvas;
+
+    private Spaceship playerShip;
 
     public SpaceDirector(Context context, GameCanvas gameCanvas) {
         this.context = context;
@@ -24,6 +29,12 @@ public class SpaceDirector implements Director {
                 return true;
             }
         });
+
+        this.initializeWorld();
+    }
+
+    private void initializeWorld() {
+        this.playerShip = new Spaceship(DisplayHelper.loadBitmap(this.context, R.drawable.player_ship));
     }
 
     @Override
