@@ -9,6 +9,7 @@ import kobzol.spaceships.R;
 import kobzol.spaceships.model.Spaceship;
 import kobzol.spaceships.ui.DisplayHelper;
 import kobzol.spaceships.view.GameCanvas;
+import kobzol.spaceships.view.ObjectRenderer;
 
 /**
  * Controls the game.
@@ -44,10 +45,10 @@ public class SpaceDirector implements Director {
 
     @Override
     public void draw(Canvas canvas) {
-
+        ObjectRenderer.renderCentered(canvas, this.playerShip);
     }
 
     private void onUserTouch(MotionEvent event) {
-
+        this.playerShip.moveBy(0, 10);
     }
 }
