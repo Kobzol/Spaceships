@@ -1,4 +1,4 @@
-package kobzol.spaceships.controller;
+package kobzol.spaceships.game;
 
 import android.util.Log;
 

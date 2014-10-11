@@ -1,4 +1,4 @@
-package kobzol.spaceships.controller;
+package kobzol.spaceships.game;
 
 import android.app.Activity;
 
@@ -7,7 +7,7 @@ import android.app.Activity;
  *
  * GameController runs the main game loop and contains all of the game objects.
  */
-public class GameController {
+public class Game {
     public static final int GAME_FPS = 25;
 
     private GameState gameState;
@@ -16,10 +16,10 @@ public class GameController {
 
     private final Activity context;
 
-    public GameController(Activity context) {
+    public Game(Activity context) {
         this.gameState = GameState.CREATED;
 
-        this.gameRunner = new GameRunner(GameController.GAME_FPS);
+        this.gameRunner = new GameRunner(Game.GAME_FPS);
         this.gameRunner.addLoopStartListener(new LoopStartListener() {
             @Override
             public void onLoopStarted() {

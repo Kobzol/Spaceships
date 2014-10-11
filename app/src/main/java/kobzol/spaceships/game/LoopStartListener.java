@@ -1,4 +1,4 @@
-package kobzol.spaceships.controller;
+package kobzol.spaceships.game;
 
 /**
  * Action that should be performed when a loop has started.

@@ -3,32 +3,32 @@ package kobzol.spaceships.ui;
 import android.app.Activity;
 import android.os.Bundle;
 
-import kobzol.spaceships.controller.GameController;
+import kobzol.spaceships.game.Game;
 
 public class GameActivity extends Activity {
-    private GameController gameController;
+    private Game game;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.gameController = new GameController(this);
-        gameController.registerContentView(this);
-        gameController.initializeGame();
+        this.game = new Game(this);
+        game.registerContentView(this);
+        game.initializeGame();
 
-        gameController.start();
+        game.start();
     }
 
     @Override
     protected void onStop() {
-        this.gameController.stop();
+        this.game.stop();
         super.onStop();
     }
 
     @Override
     protected void onRestart() {
-        this.gameController.start();
+        this.game.start();
         super.onRestart();
     }
 }
