@@ -13,9 +13,16 @@ public interface Movable {
     PointF getLocation();
 
     /**
-     * Changes the object's location.
+     * Changes the object's location (relative to it's curent location).
      * @param x horizontal change in pixels
      * @param y vertical change in pixels
      */
-    void move(float x, float y);
+    void moveBy(float x, float y);
+
+    /**
+     * Changes the object's location.
+     * @param x horizontal location in pixels
+     * @param y vertical location in pixels
+     */
+    void moveTo(float x, float y);
 }
