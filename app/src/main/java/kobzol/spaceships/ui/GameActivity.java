@@ -14,10 +14,8 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         this.game = new Game(this);
-        game.registerContentView(this);
-        game.initializeGame();
-
-        game.start();
+        this.game.registerContentView(this);
+        this.game.start();
     }
 
     @Override

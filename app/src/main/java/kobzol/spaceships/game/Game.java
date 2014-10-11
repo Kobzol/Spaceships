@@ -35,7 +35,7 @@ public class Game {
         });
 
         this.gameCanvas = new GameCanvas(context);
-        this.spaceDirector = new SpaceDirector(this.gameCanvas);
+        this.spaceDirector = new SpaceDirector(context, this.gameCanvas);
 
         this.context = context;
     }
