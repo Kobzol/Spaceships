@@ -26,11 +26,21 @@ public class Game {
     public Game(Activity context) {
         this.gameState = GameState.CREATED;
 
-        this.gameRunner = new GameRunner(Game.GAME_FPS);
-        this.gameRunner.addLoopStartListener(new LoopStartListener() {
+        this.gameRunner = new GameRunner(Game.GAME_FPS, new LoopListener() {
             @Override
-            public void onLoopStarted() {
-                updateAll();
+            public void onUpdate() {
+                spaceDirector.update();
+            }
+
+            @Override
+            public void onDraw() {
+                Canvas canvas = gameCanvas.startDrawing();
+
+                if (canvas != null)
+                {
+                    spaceDirector.draw(canvas);
+                    gameCanvas.stopDrawing(canvas);
+                }
             }
         });
 
@@ -62,20 +72,5 @@ public class Game {
     public void stop() {
         this.gameState = GameState.STOPPED;
         this.gameRunner.stop();
-    }
-
-    /**
-     * Updates all contained game objects and causes them to redraw themselves.
-     */
-    private void updateAll() {
-        this.spaceDirector.update();
-
-        Canvas canvas = this.gameCanvas.startDrawing();
-
-        if (canvas != null)
-        {
-            this.spaceDirector.draw(canvas);
-            this.gameCanvas.stopDrawing(canvas);
-        }
     }
 }

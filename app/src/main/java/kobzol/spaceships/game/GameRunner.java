@@ -1,30 +1,22 @@
 package kobzol.spaceships.game;
 
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Thread that executes the game loop.
  */
 public class GameRunner {
     private final int fps;
-    private List<LoopStartListener> listeners;
+    private final LoopListener listener;
 
     private Thread thread;
     private boolean running;
 
-    public GameRunner(int fps) {
+    public GameRunner(int fps, LoopListener listener) {
         this.fps = fps;
-        this.listeners = new ArrayList<LoopStartListener>();
+        this.listener = listener;
     }
 
     public int getFps() {
         return this.fps;
-    }
-    public void addLoopStartListener(LoopStartListener listener) {
-        this.listeners.add(listener);
     }
 
     /**
@@ -38,34 +30,22 @@ public class GameRunner {
                 @Override
                 public void run() {
                     final int skipFrames = 1000 / fps;
-                    long nextFrameTime = getCurrentTime();
-                    long sleepTime;
+                    long nextUpdateTime = getCurrentTime();
+                    int loopCounter;
 
                     while (running)
                     {
-                        for (LoopStartListener listener : listeners)
+                        loopCounter = 0;
+
+                        while (getCurrentTime() > nextUpdateTime && loopCounter < 5)
                         {
-                            listener.onLoopStarted();
+                            listener.onUpdate();
+
+                            nextUpdateTime += skipFrames;
+                            loopCounter++;
                         }
 
-                        nextFrameTime += skipFrames;
-                        sleepTime = nextFrameTime - getCurrentTime();
-
-                        if (sleepTime > 0)
-                        {
-                            try
-                            {
-                                Thread.sleep(sleepTime);
-                            }
-                            catch (InterruptedException e)
-                            {
-
-                            }
-                        }
-                        else
-                        {
-                            Log.w("Game loop", "Game lagging");
-                        }
+                        listener.onDraw();
                     }
                 }
             });

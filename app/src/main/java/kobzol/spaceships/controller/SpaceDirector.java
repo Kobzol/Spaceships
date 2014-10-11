@@ -3,6 +3,7 @@ package kobzol.spaceships.controller;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -57,5 +58,6 @@ public class SpaceDirector implements Director {
 
     private void onUserTouch(MotionEvent event) {
         this.playerShip.moveBy(0, 10);
+        Log.i("user input", "onUserTouch");
     }
 }
