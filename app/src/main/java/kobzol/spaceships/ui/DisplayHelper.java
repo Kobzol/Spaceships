@@ -1,6 +1,8 @@
 package kobzol.spaceships.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
@@ -18,5 +20,15 @@ public class DisplayHelper {
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
 
         return metrics;
+    }
+
+    /**
+     * Loads bitmap from application resources.
+     * @param context context
+     * @param id bitmap (resource) id
+     * @return loaded bitmap
+     */
+    public static Bitmap loadBitmap(Context context, int id) {
+        return BitmapFactory.decodeResource(context.getResources(), id);
     }
 }
