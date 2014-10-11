@@ -1,6 +1,10 @@
 package kobzol.spaceships.game;
 
 import android.app.Activity;
+import android.graphics.Canvas;
+
+import kobzol.spaceships.controller.SpaceDirector;
+import kobzol.spaceships.view.GameCanvas;
 
 /**
  * Creates and controls the game.
@@ -13,6 +17,9 @@ public class Game {
     private GameState gameState;
 
     private final GameRunner gameRunner;
+    private final GameCanvas gameCanvas;
+
+    private final SpaceDirector spaceDirector;
 
     private final Activity context;
 
@@ -27,6 +34,9 @@ public class Game {
             }
         });
 
+        this.gameCanvas = new GameCanvas(context);
+        this.spaceDirector = new SpaceDirector(this.gameCanvas);
+
         this.context = context;
     }
 
@@ -35,7 +45,7 @@ public class Game {
      * @param context activity
      */
     public void registerContentView(Activity context) {
-
+        context.setContentView(this.gameCanvas);
     }
 
     /**
@@ -58,6 +68,14 @@ public class Game {
      * Updates all contained game objects and causes them to redraw themselves.
      */
     private void updateAll() {
+        this.spaceDirector.update();
 
+        Canvas canvas = this.gameCanvas.startDrawing();
+
+        if (canvas != null)
+        {
+            this.spaceDirector.draw(canvas);
+            this.gameCanvas.stopDrawing(canvas);
+        }
     }
 }
