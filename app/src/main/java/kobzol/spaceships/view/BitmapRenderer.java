@@ -2,7 +2,6 @@ package kobzol.spaceships.view;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.RectF;
 
 import kobzol.spaceships.model.Movable;
 import kobzol.spaceships.ui.DisplayHelper;
@@ -19,9 +18,24 @@ public class BitmapRenderer implements Renderer {
         this.bmp = bmp;
     }
 
+    /**
+     * Returns the renderer's object.
+     * @return movable object
+     */
+    public Movable getObject() {
+        return this.object;
+    }
+
+    /**
+     * Returns the renderer's bitmap.
+     * @return bitmap
+     */
+    public Bitmap getBitmap() {
+        return this.bmp;
+    }
+
     @Override
     public void draw(Canvas canvas) {
-        RectF rectangle = DisplayHelper.getRectangle(this.object);
-        canvas.drawBitmap(this.bmp, null, rectangle, Renderer.DEFAULT_PAINT);
+        canvas.drawBitmap(this.bmp, null, DisplayHelper.getRectangle(this.object), Renderer.DEFAULT_PAINT);
     }
 }

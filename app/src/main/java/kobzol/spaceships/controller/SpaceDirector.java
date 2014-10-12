@@ -13,6 +13,7 @@ import kobzol.spaceships.model.Spaceship;
 import kobzol.spaceships.ui.DisplayHelper;
 import kobzol.spaceships.view.BitmapRenderer;
 import kobzol.spaceships.view.GameCanvas;
+import kobzol.spaceships.view.NonScaledBitmapRenderer;
 
 /**
  * Controls the game.
@@ -49,7 +50,7 @@ public class SpaceDirector implements Director {
     private void initializeWorld() {
         this.spaceBackground = new Background(this.gameCanvas.getDimension(), 2);
         this.spaceBackground.moveTo(this.gameCanvas.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
-        this.spaceBackground.setRenderer(new BitmapRenderer(this.spaceBackground, DisplayHelper.loadBitmap(this.context, R.drawable.space_background)));
+        this.spaceBackground.setRenderer(new NonScaledBitmapRenderer(this.spaceBackground, DisplayHelper.loadBitmap(this.context, R.drawable.space_background)));
         this.spaceBackgroundController = new SpaceBackgroundController(this.spaceBackground, this);
 
         this.playerShip = new Spaceship(new Dimension(300, 300), 10.0f);
