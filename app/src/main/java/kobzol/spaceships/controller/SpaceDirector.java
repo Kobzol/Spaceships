@@ -46,10 +46,12 @@ public class SpaceDirector implements Director {
     public GameCanvas getGameCanvas() {
         return this.gameCanvas;
     }
+    public Context getContext() {
+        return this.context;
+    }
 
     private void initializeWorld() {
         this.spaceBackground = new Background(this.gameCanvas.getDimension(), 2);
-        this.spaceBackground.moveTo(this.gameCanvas.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
         this.spaceBackground.setRenderer(new NonScaledBitmapRenderer(this.spaceBackground, DisplayHelper.loadBitmap(this.context, R.drawable.space_background)));
         this.spaceBackgroundController = new SpaceBackgroundController(this.spaceBackground, this);
 

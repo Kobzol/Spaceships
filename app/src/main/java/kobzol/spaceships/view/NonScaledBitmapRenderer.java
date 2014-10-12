@@ -17,8 +17,8 @@ public class NonScaledBitmapRenderer extends BitmapRenderer {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(
                 this.getBitmap(),
-                this.getObject().getLocation().x - this.getObject().getDimension().getWidth() / 2,
-                this.getObject().getLocation().y - this.getObject().getDimension().getHeight() / 2,
+                this.getObject().getLocation().x,
+                this.getObject().getLocation().y,
                 Renderer.DEFAULT_PAINT);
     }
 }
