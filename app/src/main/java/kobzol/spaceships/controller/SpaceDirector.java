@@ -9,6 +9,8 @@ import android.view.View;
 
 import kobzol.spaceships.R;
 import kobzol.spaceships.model.Background;
+import kobzol.spaceships.model.Dimension;
+import kobzol.spaceships.model.Spaceship;
 import kobzol.spaceships.ui.DisplayHelper;
 import kobzol.spaceships.view.BitmapRenderer;
 import kobzol.spaceships.view.GameCanvas;
@@ -21,6 +23,7 @@ public class SpaceDirector implements Director {
     private final GameCanvas gameCanvas;
 
     private Background spaceBackground;
+    private Spaceship playerShip;
 
     public SpaceDirector(Context context, GameCanvas gameCanvas) {
         this.context = context;
@@ -38,7 +41,12 @@ public class SpaceDirector implements Director {
 
     private void initializeWorld() {
         this.spaceBackground = new Background(this.gameCanvas.getDimension());
+        this.spaceBackground.moveTo(this.gameCanvas.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
         this.spaceBackground.setRenderer(new BitmapRenderer(this.spaceBackground, DisplayHelper.loadBitmap(this.context, R.drawable.space_background)));
+
+        this.playerShip = new Spaceship(new Dimension(300, 300));
+        this.playerShip.moveTo(this.playerShip.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
+        this.playerShip.setRenderer(new BitmapRenderer(this.playerShip, DisplayHelper.loadBitmap(this.context, R.drawable.player_ship)));
     }
 
     @Override
@@ -49,13 +57,15 @@ public class SpaceDirector implements Director {
     @Override
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
-        this.backgroundRenderer.draw(canvas);
 
-
+        this.spaceBackground.getRenderer().draw(canvas);
+        this.playerShip.getRenderer().draw(canvas);
     }
 
     @Override
     public boolean onInput(MotionEvent event) {
+        this.playerShip.moveTo(150, 360);
+
         Log.i("user input", "onUserTouch");
 
         return true;

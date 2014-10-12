@@ -2,8 +2,10 @@ package kobzol.spaceships.view;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.RectF;
 
 import kobzol.spaceships.model.Movable;
+import kobzol.spaceships.ui.DisplayHelper;
 
 /**
  * Renderer which displays given bitmap at the position (top left) of the model.
@@ -19,6 +21,7 @@ public class BitmapRenderer implements Renderer {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(this.bmp, this.object.getLocation().x, this.object.getLocation().y, Renderer.DEFAULT_PAINT);
+        RectF rectangle = DisplayHelper.getRectangle(this.object);
+        canvas.drawBitmap(this.bmp, null, rectangle, Renderer.DEFAULT_PAINT);
     }
 }
