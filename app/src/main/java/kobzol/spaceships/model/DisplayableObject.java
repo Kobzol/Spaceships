@@ -10,12 +10,14 @@ import kobzol.spaceships.view.Renderer;
 public abstract class DisplayableObject implements Movable {
     private PointF location;
     private Dimension dimension;
+    private float speed;
 
     private Renderer renderer;
 
-    public DisplayableObject(Dimension dimension) {
+    public DisplayableObject(Dimension dimension, float speed) {
         this.location = new PointF(0, 0);
         this.dimension = dimension;
+        this.speed = speed;
     }
 
     public void setRenderer(Renderer renderer) {
@@ -44,5 +46,10 @@ public abstract class DisplayableObject implements Movable {
     @Override
     public void moveTo(float x, float y) {
         this.location.set(x, y);
+    }
+
+    @Override
+    public float getSpeed() {
+        return this.speed;
     }
 }

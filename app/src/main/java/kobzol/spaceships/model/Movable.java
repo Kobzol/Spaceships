@@ -31,4 +31,10 @@ public interface Movable {
      * @param y vertical location in pixels
      */
     void moveTo(float x, float y);
+
+    /**
+     * Returns the object's speed.
+     * @return speed in pixels/tick
+     */
+    float getSpeed();
 }
