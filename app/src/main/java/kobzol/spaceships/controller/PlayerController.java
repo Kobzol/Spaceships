@@ -3,6 +3,7 @@ package kobzol.spaceships.controller;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
+import kobzol.spaceships.model.Mover;
 import kobzol.spaceships.model.Spaceship;
 
 /**
@@ -23,7 +24,7 @@ public class PlayerController implements Controller {
 
     @Override
     public void update() {
-
+        Mover.moveTowards(this.playerShip, this.lastClick);
     }
 
     @Override

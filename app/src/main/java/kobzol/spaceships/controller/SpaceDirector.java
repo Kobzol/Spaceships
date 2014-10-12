@@ -23,7 +23,10 @@ public class SpaceDirector implements Director {
     private final GameCanvas gameCanvas;
 
     private Background spaceBackground;
+
     private Spaceship playerShip;
+    private PlayerController playerController;
+
 
     public SpaceDirector(Context context, GameCanvas gameCanvas) {
         this.context = context;
@@ -40,18 +43,19 @@ public class SpaceDirector implements Director {
     }
 
     private void initializeWorld() {
-        this.spaceBackground = new Background(this.gameCanvas.getDimension());
+        this.spaceBackground = new Background(this.gameCanvas.getDimension(), 0);
         this.spaceBackground.moveTo(this.gameCanvas.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
         this.spaceBackground.setRenderer(new BitmapRenderer(this.spaceBackground, DisplayHelper.loadBitmap(this.context, R.drawable.space_background)));
 
-        this.playerShip = new Spaceship(new Dimension(300, 300));
+        this.playerShip = new Spaceship(new Dimension(300, 300), 2.0f);
         this.playerShip.moveTo(this.playerShip.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
         this.playerShip.setRenderer(new BitmapRenderer(this.playerShip, DisplayHelper.loadBitmap(this.context, R.drawable.player_ship)));
+        this.playerController = new PlayerController(this.playerShip, this);
     }
 
     @Override
     public void update() {
-
+        this.playerController.update();
     }
 
     @Override
@@ -64,7 +68,7 @@ public class SpaceDirector implements Director {
 
     @Override
     public boolean onInput(MotionEvent event) {
-        this.playerShip.moveTo(150, 360);
+        this.playerController.onInput(event);
 
         Log.i("user input", "onUserTouch");
 
