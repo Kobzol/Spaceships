@@ -14,6 +14,7 @@ public interface Controller {
     /**
      * Reacts to user input.
      * @param event touch event
+     * @return true if the input was consumed, false otherwise
      */
-    void onInput(MotionEvent event);
+    boolean onInput(MotionEvent event);
 }
