@@ -32,6 +32,7 @@ public class GameRunner {
                     final int skipFrames = 1000 / fps;
                     long nextUpdateTime = getCurrentTime();
                     int loopCounter;
+                    float interpolation;
 
                     while (running)
                     {
@@ -45,6 +46,7 @@ public class GameRunner {
                             loopCounter++;
                         }
 
+                        interpolation = (getCurrentTime() + skipFrames - nextUpdateTime) / (float) skipFrames;
                         listener.onDraw();
                     }
                 }

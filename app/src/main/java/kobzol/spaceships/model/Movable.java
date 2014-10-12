@@ -13,6 +13,12 @@ public interface Movable {
     PointF getLocation();
 
     /**
+     * Returns the dimension of the object.
+     * @return dimension
+     */
+    Dimension getDimension();
+
+    /**
      * Changes the object's location (relative to it's curent location).
      * @param x horizontal change in pixels
      * @param y vertical change in pixels

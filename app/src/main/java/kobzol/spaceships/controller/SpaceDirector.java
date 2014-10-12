@@ -12,7 +12,6 @@ import kobzol.spaceships.model.Background;
 import kobzol.spaceships.model.Spaceship;
 import kobzol.spaceships.ui.DisplayHelper;
 import kobzol.spaceships.view.GameCanvas;
-import kobzol.spaceships.view.ObjectRenderer;
 
 /**
  * Controls the game.
@@ -30,7 +29,7 @@ public class SpaceDirector implements Director {
         this.gameCanvas.addInputListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                onUserTouch(motionEvent);
+                onInput(motionEvent);
                 return true;
             }
         });
@@ -45,19 +44,16 @@ public class SpaceDirector implements Director {
 
     @Override
     public void update() {
-        this.background.moveBy(-10, 0);
+
     }
 
     @Override
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
-
-        ObjectRenderer.renderTopLeft(canvas, this.background);
-        ObjectRenderer.renderCentered(canvas, this.playerShip);
     }
 
-    private void onUserTouch(MotionEvent event) {
-        this.playerShip.moveBy(0, 10);
+    @Override
+    public void onInput(MotionEvent event) {
         Log.i("user input", "onUserTouch");
     }
 }
