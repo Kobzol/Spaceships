@@ -17,7 +17,7 @@ public class Mover {
 
         if (length != 0)
         {
-            vector.set((float)(vector.x / length), (float)(vector.y / length));
+            vector.set((float) (vector.x / length), (float) (vector.y / length));
             object.moveBy(vector.x * object.getSpeed(), vector.y * object.getSpeed());
         }
     }

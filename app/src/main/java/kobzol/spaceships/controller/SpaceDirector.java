@@ -3,7 +3,6 @@ package kobzol.spaceships.controller;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -42,12 +41,16 @@ public class SpaceDirector implements Director {
         this.initializeWorld();
     }
 
+    public GameCanvas getGameCanvas() {
+        return this.gameCanvas;
+    }
+
     private void initializeWorld() {
         this.spaceBackground = new Background(this.gameCanvas.getDimension(), 0);
         this.spaceBackground.moveTo(this.gameCanvas.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
         this.spaceBackground.setRenderer(new BitmapRenderer(this.spaceBackground, DisplayHelper.loadBitmap(this.context, R.drawable.space_background)));
 
-        this.playerShip = new Spaceship(new Dimension(300, 300), 2.0f);
+        this.playerShip = new Spaceship(new Dimension(300, 300), 10.0f);
         this.playerShip.moveTo(this.playerShip.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
         this.playerShip.setRenderer(new BitmapRenderer(this.playerShip, DisplayHelper.loadBitmap(this.context, R.drawable.player_ship)));
         this.playerController = new PlayerController(this.playerShip, this);
@@ -69,8 +72,6 @@ public class SpaceDirector implements Director {
     @Override
     public boolean onInput(MotionEvent event) {
         this.playerController.onInput(event);
-
-        Log.i("user input", "onUserTouch");
 
         return true;
     }
