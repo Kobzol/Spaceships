@@ -1,7 +1,6 @@
 package kobzol.spaceships.controller;
 
 import android.graphics.PointF;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import kobzol.spaceships.model.Mover;
@@ -32,14 +31,11 @@ public class PlayerController implements Controller {
             DisplayHelper.isInsideBounds(this.director.getGameCanvas().getDimension(), DisplayHelper.getVectorDelta(this.playerShip.getLocation(), this.lastClick, this.playerShip.getSpeed()), this.playerShip.getDimension()))
         {
             Mover.moveTowards(this.playerShip, this.lastClick);
-            Log.i("Player controller update", "moving ship to " + this.lastClick.toString());
         }
     }
 
     @Override
     public boolean onInput(MotionEvent event) {
-        Log.i("Player controller touch", event.getAction() + "");
-
         if (event.getAction() == MotionEvent.ACTION_MOVE ||
             event.getAction() == MotionEvent.ACTION_DOWN)
         {

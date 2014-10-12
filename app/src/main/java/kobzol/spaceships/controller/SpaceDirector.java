@@ -22,6 +22,7 @@ public class SpaceDirector implements Director {
     private final GameCanvas gameCanvas;
 
     private Background spaceBackground;
+    private SpaceBackgroundController spaceBackgroundController;
 
     private Spaceship playerShip;
     private PlayerController playerController;
@@ -46,9 +47,10 @@ public class SpaceDirector implements Director {
     }
 
     private void initializeWorld() {
-        this.spaceBackground = new Background(this.gameCanvas.getDimension(), 0);
+        this.spaceBackground = new Background(this.gameCanvas.getDimension(), 2);
         this.spaceBackground.moveTo(this.gameCanvas.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
         this.spaceBackground.setRenderer(new BitmapRenderer(this.spaceBackground, DisplayHelper.loadBitmap(this.context, R.drawable.space_background)));
+        this.spaceBackgroundController = new SpaceBackgroundController(this.spaceBackground, this);
 
         this.playerShip = new Spaceship(new Dimension(300, 300), 10.0f);
         this.playerShip.moveTo(this.playerShip.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
@@ -58,6 +60,7 @@ public class SpaceDirector implements Director {
 
     @Override
     public void update() {
+        this.spaceBackgroundController.update();
         this.playerController.update();
     }
 
