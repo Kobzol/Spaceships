@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 
-import kobzol.spaceships.model.MenuDirector;
+import kobzol.spaceships.event.SideMenuAction;
 import kobzol.spaceships.view.GameCanvas;
 
 /**
@@ -44,7 +44,12 @@ public class SpaceDirector implements Director {
     private void initializeWorld() {
         this.spaceBackgroundDirector = new SpaceBackgroundDirector(this);
         this.playerDirector = new PlayerDirector(this);
-        this.menuDirector = new MenuDirector(this);
+        this.menuDirector = new MenuDirector(this, new SideMenuAction() {
+            @Override
+            public void onFireButtonClicked() {
+                playerDirector.fireWeapon();
+            }
+        });
     }
 
     @Override

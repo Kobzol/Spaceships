@@ -3,6 +3,7 @@ package kobzol.spaceships.controller;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import kobzol.spaceships.model.Dimension;
 import kobzol.spaceships.model.Mover;
@@ -31,6 +32,10 @@ public class PlayerDirector implements Director {
         this.director = director;
 
         this.lastClick = playerShip.getLocation();
+    }
+
+    public void fireWeapon() {
+        Toast.makeText(this.director.getContext(), "test fire weapon", Toast.LENGTH_SHORT).show();
     }
 
     @Override
