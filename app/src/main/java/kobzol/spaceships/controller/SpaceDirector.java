@@ -60,7 +60,10 @@ public class SpaceDirector implements Director {
         });
     }
 
-    private void checkAsteroidCollision() {
+    /**
+     * Checks collisions of bullets with asteroids.
+     */
+    private void checkAsteroidWithBulletCollision() {
         for (LaserBullet bullet : this.playerDirector.getBullets())
         {
             for (Asteroid asteroid : this.asteroidGenerator.getAsteroids())
@@ -77,9 +80,34 @@ public class SpaceDirector implements Director {
             }
         }
     }
+
+    /**
+     * Checks collisions of the player's ship with asteroids.
+     */
+    private void checkAsteroidWithShipCollision() {
+        for (Asteroid asteroid : this.asteroidGenerator.getAsteroids())
+        {
+            if (DisplayHelper.getRectangle(asteroid).intersect(DisplayHelper.getRectangle(this.playerDirector.getPlayerShip())))
+            {
+                this.onShipDestroyed();
+                break;
+            }
+        }
+    }
+
+    /**
+     * Increments the player's score and updates the value in the side menu.
+     */
     private void onAsteroidDestroyed() {
         this.playerScore++;
         this.menuDirector.setScore(this.playerScore);
+    }
+
+    /**
+     * Displays notification to the user and restarts the game.
+     */
+    private void onShipDestroyed() {
+        this.initializeWorld();
     }
 
     @Override
@@ -89,7 +117,8 @@ public class SpaceDirector implements Director {
         this.asteroidGenerator.update();
         this.playerDirector.update();
 
-        this.checkAsteroidCollision();
+        this.checkAsteroidWithBulletCollision();
+        this.checkAsteroidWithShipCollision();
     }
 
     @Override

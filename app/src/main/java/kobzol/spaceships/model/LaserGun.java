@@ -57,7 +57,7 @@ public class LaserGun implements WeaponEmitter {
 
             this.bullets.add(newBullet);
 
-            SoundManager.LASER_SOUND.start();
+            SoundManager.playSound(SoundManager.LASER_SOUND);
 
             this.cooldown_timer = 0;
         }

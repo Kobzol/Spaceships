@@ -24,4 +24,18 @@ public class SoundManager {
             LASER_SOUND = null;
         }
     }
+
+    /**
+     * Plays a sound. If it is already playing, it stops and resets it.
+     * @param mp media player
+     */
+    public static void playSound(MediaPlayer mp) {
+        if (mp.isPlaying())
+        {
+            mp.pause();
+            mp.seekTo(0);
+        }
+
+        mp.start();
+    }
 }

@@ -41,6 +41,9 @@ public class PlayerDirector implements Director {
         this.lastClick = playerShip.getLocation();
     }
 
+    public Spaceship getPlayerShip() {
+        return this.playerShip;
+    }
     public List<LaserBullet> getBullets() {
         return this.playerShip.getLaserGun().getBullets();
     }
