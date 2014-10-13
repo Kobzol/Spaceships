@@ -64,8 +64,8 @@ public class SpaceDirector implements Director {
         canvas.drawColor(Color.BLACK);
 
         this.spaceBackgroundDirector.draw(canvas, interpolation);
-        this.menuDirector.draw(canvas, interpolation);
         this.playerDirector.draw(canvas, interpolation);
+        this.menuDirector.draw(canvas, interpolation);
     }
 
     @Override

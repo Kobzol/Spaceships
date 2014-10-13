@@ -1,15 +1,18 @@
 package kobzol.spaceships.controller;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
+import kobzol.spaceships.R;
 import kobzol.spaceships.model.Dimension;
+import kobzol.spaceships.model.LaserBullet;
 import kobzol.spaceships.model.Mover;
 import kobzol.spaceships.model.Spaceship;
 import kobzol.spaceships.model.Vector;
 import kobzol.spaceships.ui.DisplayHelper;
+import kobzol.spaceships.view.RenderingCollection;
 import kobzol.spaceships.view.SpaceshipRenderer;
 
 /**
@@ -20,22 +23,24 @@ public class PlayerDirector implements Director {
     private final SpaceshipRenderer renderer;
 
     private final SpaceDirector director;
+    private final Bitmap bulletImage;
 
     private PointF lastClick;
     private boolean moveShip = false;
 
     public PlayerDirector(SpaceDirector director) {
         this.playerShip = new Spaceship(new Dimension(300, 300), new Vector(0.0f, 10.0f));
-        this.playerShip.moveTo(300, 300);
+        this.playerShip.moveTo(this.playerShip.getDimension().getWidth() / 2, director.getGameCanvas().getDimension().getHeight() / 2);
 
         this.renderer = new SpaceshipRenderer(playerShip, director.getContext());
         this.director = director;
+        this.bulletImage = DisplayHelper.loadBitmap(director.getContext(), R.drawable.laser);
 
         this.lastClick = playerShip.getLocation();
     }
 
     public void fireWeapon() {
-        Toast.makeText(this.director.getContext(), "test fire weapon", Toast.LENGTH_SHORT).show();
+        this.playerShip.fire();
     }
 
     @Override
@@ -46,10 +51,17 @@ public class PlayerDirector implements Director {
         {
             Mover.moveTowards(this.playerShip, this.lastClick);
         }
+
+        this.playerShip.getLaserGun().update(this.director);
     }
 
     @Override
     public void draw(Canvas canvas, float interpolation) {
+        for (LaserBullet bullet : this.playerShip.getLaserGun().getBullets())
+        {
+            RenderingCollection.renderCenteredBitmap(bullet, this.bulletImage, canvas, interpolation);
+        }
+
         this.renderer.draw(canvas, interpolation);
     }
 
