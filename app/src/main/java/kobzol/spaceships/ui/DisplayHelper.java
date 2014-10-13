@@ -87,6 +87,20 @@ public class DisplayHelper {
     }
 
     /**
+     * Calculates whether the given point is inside the given rectangle.
+     * @param rectangleLocation location of the rectangle
+     * @param rectangleDimension dimension of the rectangle
+     * @param point point
+     * @return true if the point is inside the rectangle, otherwise false
+     */
+    public static boolean isPointInsideBounds(PointF rectangleLocation, Dimension rectangleDimension, PointF point) {
+        return  point.x <= rectangleLocation.x + rectangleDimension.getWidth() / 2  &&
+                point.x >= rectangleLocation.x - rectangleDimension.getWidth() / 2 &&
+                point.y >= rectangleLocation.y - rectangleDimension.getHeight() / 2 &&
+                point.y <= rectangleLocation.y + rectangleDimension.getHeight() / 2;
+    }
+
+    /**
      * Returns source vector moved towards destination vector by speed.
      * @param source source vector
      * @param destination destination vector
