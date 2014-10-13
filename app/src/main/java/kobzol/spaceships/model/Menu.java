@@ -59,7 +59,7 @@ public class Menu extends DisplayableObject implements Controller, Renderer {
             }
         }
 
-        return false;
+        return DisplayHelper.isPointInsideBounds(this.getLocation(), this.getDimension(), clicked); // consumes the event if the touch happened on this menu
     }
 
     @Override

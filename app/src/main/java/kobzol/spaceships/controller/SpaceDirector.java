@@ -61,8 +61,8 @@ public class SpaceDirector implements Director {
         this.spaceBackgroundController = new SpaceBackgroundController(this.spaceBackground, this);
 
         this.sideMenu = new Menu(new Dimension(200, this.gameCanvas.getDimension().getHeight()), 0.0f, DisplayHelper.loadBitmap(this.context, R.drawable.menu));
-        this.sideMenu.moveTo(this.gameCanvas.getDimension().getWidth() - this.sideMenu.getDimension().getHeight(), this.gameCanvas.getDimension().getHeight() / 2);
-        this.sideMenu.addButton(new MenuButton(new Dimension(50, 50), 0.0f, new MenuAction() {
+        this.sideMenu.moveTo(this.gameCanvas.getDimension().getWidth() - this.sideMenu.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
+        this.sideMenu.addButton(new MenuButton(new Dimension(150, 150), 0.0f, new MenuAction() {
             @Override
             public void onButtonClicked(MenuButton button) {
                 Toast.makeText(context, "button clicked!", Toast.LENGTH_SHORT).show();
@@ -78,6 +78,8 @@ public class SpaceDirector implements Director {
     @Override
     public void update() {
         this.spaceBackgroundController.update();
+        this.sideMenu.update();
+
         this.playerController.update();
     }
 
@@ -86,12 +88,17 @@ public class SpaceDirector implements Director {
         canvas.drawColor(Color.BLACK);
 
         this.spaceBackground.getRenderer().draw(canvas);
+        this.sideMenu.draw(canvas);
+
         this.playerShip.getRenderer().draw(canvas);
     }
 
     @Override
     public boolean onInput(MotionEvent event) {
-        this.playerController.onInput(event);
+        if (!this.sideMenu.onInput(event))
+        {
+            this.playerController.onInput(event);
+        }
 
         return true;
     }
