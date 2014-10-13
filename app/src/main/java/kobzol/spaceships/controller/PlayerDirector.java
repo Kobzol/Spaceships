@@ -1,24 +1,33 @@
 package kobzol.spaceships.controller;
 
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
+import kobzol.spaceships.model.Dimension;
 import kobzol.spaceships.model.Mover;
 import kobzol.spaceships.model.Spaceship;
+import kobzol.spaceships.model.Vector;
 import kobzol.spaceships.ui.DisplayHelper;
+import kobzol.spaceships.view.SpaceshipRenderer;
 
 /**
  * Controller taking care of the player's actions.
  */
-public class PlayerController implements Controller {
+public class PlayerDirector implements Director {
     private final Spaceship playerShip;
+    private final SpaceshipRenderer renderer;
+
     private final SpaceDirector director;
 
     private PointF lastClick;
     private boolean moveShip = false;
 
-    public PlayerController(Spaceship playerShip, SpaceDirector director) {
-        this.playerShip = playerShip;
+    public PlayerDirector(SpaceDirector director) {
+        this.playerShip = new Spaceship(new Dimension(300, 300), new Vector(0.0f, 10.0f));
+        this.playerShip.moveTo(300, 300);
+
+        this.renderer = new SpaceshipRenderer(playerShip, director.getContext());
         this.director = director;
 
         this.lastClick = playerShip.getLocation();
@@ -32,6 +41,11 @@ public class PlayerController implements Controller {
         {
             Mover.moveTowards(this.playerShip, this.lastClick);
         }
+    }
+
+    @Override
+    public void draw(Canvas canvas, float interpolation) {
+        this.renderer.draw(canvas, interpolation);
     }
 
     @Override

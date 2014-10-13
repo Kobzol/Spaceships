@@ -12,6 +12,7 @@ public interface Renderer {
     /**
      * Draw the model onto a canvas.
      * @param canvas canvas
+     * @param interpolation interpolation value
      */
-    void draw(Canvas canvas);
+    void draw(Canvas canvas, float interpolation);
 }

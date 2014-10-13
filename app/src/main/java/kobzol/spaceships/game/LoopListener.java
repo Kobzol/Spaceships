@@ -12,5 +12,5 @@ public interface LoopListener {
     /**
      * Called when the game should draw.
      */
-    void onDraw();
+    void onDraw(float interpolation);
 }

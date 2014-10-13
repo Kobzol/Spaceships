@@ -3,7 +3,7 @@ package kobzol.spaceships.model;
 /**
  * Dimension of an object - it's width and height.
  */
-public class Dimension {
+public class Dimension implements Copyable<Dimension> {
     private final float width;
     private final float height;
 
@@ -17,5 +17,10 @@ public class Dimension {
     }
     public float getHeight() {
         return this.height;
+    }
+
+    @Override
+    public Dimension copy() {
+        return new Dimension(this.width, this.height);
     }
 }

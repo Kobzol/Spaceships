@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import kobzol.spaceships.model.Dimension;
 import kobzol.spaceships.model.Movable;
+import kobzol.spaceships.model.Vector;
 
 /**
  * Static class with display methods.
@@ -107,7 +108,7 @@ public class DisplayHelper {
      * @param speed speed in pixels/tick
      * @return moved vector
      */
-    public static PointF getVectorDelta(PointF source, PointF destination, float speed) {
+    public static PointF getVectorDelta(PointF source, PointF destination, Vector speed) {
         PointF vector = new PointF(destination.x - source.x, destination.y - source.y);
         double length = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
 
@@ -119,7 +120,7 @@ public class DisplayHelper {
         {
             vector.set((float)(vector.x / length), (float)(vector.y / length));
 
-            return new PointF(source.x + vector.x * speed, source.y + vector.y * speed);
+            return new PointF(source.x + vector.x * speed.x, source.y + vector.y * speed.y);
         }
     }
 }

@@ -36,5 +36,5 @@ public interface Movable {
      * Returns the object's speed.
      * @return speed in pixels/tick
      */
-    float getSpeed();
+    Vector getSpeed();
 }

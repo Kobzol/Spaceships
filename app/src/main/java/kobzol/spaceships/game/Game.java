@@ -33,12 +33,12 @@ public class Game {
             }
 
             @Override
-            public void onDraw() {
+            public void onDraw(float interpolation) {
                 Canvas canvas = gameCanvas.startDrawing();
 
                 if (canvas != null)
                 {
-                    spaceDirector.draw(canvas);
+                    spaceDirector.draw(canvas, interpolation);
                     gameCanvas.stopDrawing(canvas);
                 }
             }

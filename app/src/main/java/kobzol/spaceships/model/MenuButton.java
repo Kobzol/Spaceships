@@ -8,7 +8,7 @@ import kobzol.spaceships.event.MenuAction;
 public class MenuButton extends DisplayableObject {
     private final MenuAction action;
 
-    public MenuButton(Dimension dimension, float speed, MenuAction action) {
+    public MenuButton(Dimension dimension, Vector speed, MenuAction action) {
         super(dimension, speed);
 
         this.action = action;

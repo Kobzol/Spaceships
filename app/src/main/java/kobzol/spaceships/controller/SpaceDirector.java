@@ -5,19 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
-import kobzol.spaceships.R;
-import kobzol.spaceships.event.MenuAction;
-import kobzol.spaceships.model.Background;
-import kobzol.spaceships.model.Dimension;
-import kobzol.spaceships.model.Menu;
-import kobzol.spaceships.model.MenuButton;
-import kobzol.spaceships.model.Spaceship;
-import kobzol.spaceships.ui.DisplayHelper;
-import kobzol.spaceships.view.BitmapRenderer;
+import kobzol.spaceships.model.MenuDirector;
 import kobzol.spaceships.view.GameCanvas;
-import kobzol.spaceships.view.NonScaledBitmapRenderer;
 
 /**
  * Controls the game.
@@ -26,13 +16,9 @@ public class SpaceDirector implements Director {
     private final Context context;
     private final GameCanvas gameCanvas;
 
-    private Background spaceBackground;
-    private SpaceBackgroundController spaceBackgroundController;
-
-    private Menu sideMenu;
-
-    private Spaceship playerShip;
-    private PlayerController playerController;
+    private SpaceBackgroundDirector spaceBackgroundDirector;
+    private PlayerDirector playerDirector;
+    private MenuDirector menuDirector;
 
     public SpaceDirector(Context context, GameCanvas gameCanvas) {
         this.context = context;
@@ -56,48 +42,32 @@ public class SpaceDirector implements Director {
     }
 
     private void initializeWorld() {
-        this.spaceBackground = new Background(this.gameCanvas.getDimension(), 2.0f);
-        this.spaceBackground.setRenderer(new NonScaledBitmapRenderer(this.spaceBackground, DisplayHelper.loadBitmap(this.context, R.drawable.space_background)));
-        this.spaceBackgroundController = new SpaceBackgroundController(this.spaceBackground, this);
-
-        this.sideMenu = new Menu(new Dimension(200, this.gameCanvas.getDimension().getHeight()), 0.0f, DisplayHelper.loadBitmap(this.context, R.drawable.menu));
-        this.sideMenu.moveTo(this.gameCanvas.getDimension().getWidth() - this.sideMenu.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
-        this.sideMenu.addButton(new MenuButton(new Dimension(150, 150), 0.0f, new MenuAction() {
-            @Override
-            public void onButtonClicked(MenuButton button) {
-                Toast.makeText(context, "button clicked!", Toast.LENGTH_SHORT).show();
-            }
-        }), DisplayHelper.loadBitmap(this.context, R.drawable.button));
-
-        this.playerShip = new Spaceship(new Dimension(300, 300), 10.0f);
-        this.playerShip.moveTo(this.playerShip.getDimension().getWidth() / 2, this.gameCanvas.getDimension().getHeight() / 2);
-        this.playerShip.setRenderer(new BitmapRenderer(this.playerShip, DisplayHelper.loadBitmap(this.context, R.drawable.player_ship)));
-        this.playerController = new PlayerController(this.playerShip, this);
+        this.spaceBackgroundDirector = new SpaceBackgroundDirector(this);
+        this.playerDirector = new PlayerDirector(this);
+        this.menuDirector = new MenuDirector(this);
     }
 
     @Override
     public void update() {
-        this.spaceBackgroundController.update();
-        this.sideMenu.update();
-
-        this.playerController.update();
+        this.spaceBackgroundDirector.update();
+        this.menuDirector.update();
+        this.playerDirector.update();
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, float interpolation) {
         canvas.drawColor(Color.BLACK);
 
-        this.spaceBackground.getRenderer().draw(canvas);
-        this.sideMenu.draw(canvas);
-
-        this.playerShip.getRenderer().draw(canvas);
+        this.spaceBackgroundDirector.draw(canvas, interpolation);
+        this.menuDirector.draw(canvas, interpolation);
+        this.playerDirector.draw(canvas, interpolation);
     }
 
     @Override
     public boolean onInput(MotionEvent event) {
-        if (!this.sideMenu.onInput(event))
+        if (!this.menuDirector.onInput(event))
         {
-            this.playerController.onInput(event);
+            this.playerDirector.onInput(event);
         }
 
         return true;

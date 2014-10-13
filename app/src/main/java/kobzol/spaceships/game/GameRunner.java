@@ -47,7 +47,7 @@ public class GameRunner {
                         }
 
                         interpolation = (getCurrentTime() + skipFrames - nextUpdateTime) / (float) skipFrames;
-                        listener.onDraw();
+                        listener.onDraw(interpolation);
                     }
                 }
             });
