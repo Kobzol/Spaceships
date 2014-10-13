@@ -7,6 +7,10 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import kobzol.spaceships.event.SideMenuAction;
+import kobzol.spaceships.model.Asteroid;
+import kobzol.spaceships.model.AsteroidGenerator;
+import kobzol.spaceships.model.LaserBullet;
+import kobzol.spaceships.ui.DisplayHelper;
 import kobzol.spaceships.view.GameCanvas;
 
 /**
@@ -18,7 +22,10 @@ public class SpaceDirector implements Director {
 
     private SpaceBackgroundDirector spaceBackgroundDirector;
     private PlayerDirector playerDirector;
+    private AsteroidGenerator asteroidGenerator;
     private MenuDirector menuDirector;
+
+    private int playerScore = 0;
 
     public SpaceDirector(Context context, GameCanvas gameCanvas) {
         this.context = context;
@@ -44,6 +51,7 @@ public class SpaceDirector implements Director {
     private void initializeWorld() {
         this.spaceBackgroundDirector = new SpaceBackgroundDirector(this);
         this.playerDirector = new PlayerDirector(this);
+        this.asteroidGenerator = new AsteroidGenerator(this);
         this.menuDirector = new MenuDirector(this, new SideMenuAction() {
             @Override
             public void onFireButtonClicked() {
@@ -52,11 +60,36 @@ public class SpaceDirector implements Director {
         });
     }
 
+    private void checkAsteroidCollision() {
+        for (LaserBullet bullet : this.playerDirector.getBullets())
+        {
+            for (Asteroid asteroid : this.asteroidGenerator.getAsteroids())
+            {
+                if (DisplayHelper.getRectangle(bullet).intersect(DisplayHelper.getRectangle(asteroid)))
+                {
+                    this.asteroidGenerator.getAsteroids().remove(asteroid);
+                    this.playerDirector.getBullets().remove(bullet);
+
+                    this.onAsteroidDestroyed();
+
+                    break;
+                }
+            }
+        }
+    }
+    private void onAsteroidDestroyed() {
+        this.playerScore++;
+        this.menuDirector.setScore(this.playerScore);
+    }
+
     @Override
     public void update() {
         this.spaceBackgroundDirector.update();
         this.menuDirector.update();
+        this.asteroidGenerator.update();
         this.playerDirector.update();
+
+        this.checkAsteroidCollision();
     }
 
     @Override
@@ -65,6 +98,7 @@ public class SpaceDirector implements Director {
 
         this.spaceBackgroundDirector.draw(canvas, interpolation);
         this.playerDirector.draw(canvas, interpolation);
+        this.asteroidGenerator.draw(canvas, interpolation);
         this.menuDirector.draw(canvas, interpolation);
     }
 

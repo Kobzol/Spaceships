@@ -2,6 +2,8 @@ package kobzol.spaceships.controller;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
@@ -26,6 +28,9 @@ public class MenuDirector extends DisplayableObject implements Director {
 
     private final Bitmap menuImage;
     private final Bitmap fireButtonImage;
+    private final Paint textPaint;
+
+    private int score = 0;
 
     public MenuDirector(SpaceDirector director, final SideMenuAction menuAction) {
         super(new Dimension(200, director.getGameCanvas().getDimension().getHeight()));
@@ -38,6 +43,10 @@ public class MenuDirector extends DisplayableObject implements Director {
         this.menuImage = DisplayHelper.loadBitmap(director.getContext(), R.drawable.menu);
         this.fireButtonImage = DisplayHelper.loadBitmap(director.getContext(), R.drawable.button);
 
+        this.textPaint = new Paint();
+        this.textPaint.setColor(Color.WHITE);
+        this.textPaint.setTextSize(30);
+
         this.setupButtons(menuAction);
     }
 
@@ -48,9 +57,13 @@ public class MenuDirector extends DisplayableObject implements Director {
                 menuAction.onFireButtonClicked();
             }
         });
-        fireButton.moveTo(this.getLocation().x, this.getLocation().y - 100);
+        fireButton.moveTo(this.getLocation().x, this.getLocation().y);
 
         this.buttons.add(fireButton);
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override
@@ -78,5 +91,6 @@ public class MenuDirector extends DisplayableObject implements Director {
     public void draw(Canvas canvas, float interpolation) {
         RenderingCollection.renderCenteredBitmap(this, this.menuImage, canvas, interpolation);
         RenderingCollection.renderCenteredBitmap(this.buttons.get(0), this.fireButtonImage, canvas, interpolation);
+        canvas.drawText("Score: " + this.score, this.getLocation().x - this.getDimension().getWidth() / 2 + 20, 40, this.textPaint);
     }
 }

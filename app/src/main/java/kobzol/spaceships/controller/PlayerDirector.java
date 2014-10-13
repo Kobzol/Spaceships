@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
+import java.util.List;
+
 import kobzol.spaceships.R;
 import kobzol.spaceships.model.Dimension;
 import kobzol.spaceships.model.LaserBullet;
@@ -37,6 +39,10 @@ public class PlayerDirector implements Director {
         this.bulletImage = DisplayHelper.loadBitmap(director.getContext(), R.drawable.laser);
 
         this.lastClick = playerShip.getLocation();
+    }
+
+    public List<LaserBullet> getBullets() {
+        return this.playerShip.getLaserGun().getBullets();
     }
 
     public void fireWeapon() {

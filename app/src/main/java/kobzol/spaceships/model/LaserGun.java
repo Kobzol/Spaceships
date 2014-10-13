@@ -15,7 +15,7 @@ public class LaserGun implements WeaponEmitter {
     private PointF location;
     private final List<LaserBullet> bullets;
 
-    private static final int cooldown  = 100;
+    private static final int cooldown  = 40;
     private int cooldown_timer = cooldown;
 
     public LaserGun() {

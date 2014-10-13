@@ -5,7 +5,7 @@ package kobzol.spaceships.model;
  */
 public class LaserBullet extends DisplayableObject {
     public LaserBullet() {
-        super(new Dimension(20, 20), new Vector(5.0f, 0.0f));
+        super(new Dimension(50, 20), new Vector(15.0f, 0.0f));
     }
 
     public void move() {
