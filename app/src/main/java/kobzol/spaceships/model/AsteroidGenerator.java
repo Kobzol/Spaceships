@@ -48,7 +48,7 @@ public class AsteroidGenerator implements Director {
     private PointF generateRandomAsteroidLocation() {
         return new PointF(
                 this.director.getGameCanvas().getDimension().getWidth(),
-                this.random.nextInt((int) this.director.getGameCanvas().getDimension().getHeight() - (int) AsteroidGenerator.ASTEROID_DIMENSION.getHeight() / 2) + AsteroidGenerator.ASTEROID_DIMENSION.getHeight() / 2);
+                this.random.nextInt((int) this.director.getGameCanvas().getDimension().getHeight() - (int) AsteroidGenerator.ASTEROID_DIMENSION.getHeight()) + AsteroidGenerator.ASTEROID_DIMENSION.getHeight() / 2);
     }
 
     /**

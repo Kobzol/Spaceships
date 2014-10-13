@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Canvas;
 
 import kobzol.spaceships.controller.SpaceDirector;
+import kobzol.spaceships.sound.SoundManager;
 import kobzol.spaceships.view.GameCanvas;
 
 /**
@@ -43,6 +44,8 @@ public class Game {
                 }
             }
         });
+
+        SoundManager.initialize(context);
 
         this.gameCanvas = new GameCanvas(context);
         this.spaceDirector = new SpaceDirector(context, this.gameCanvas);

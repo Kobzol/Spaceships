@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import kobzol.spaceships.game.Game;
+import kobzol.spaceships.sound.SoundManager;
 
 public class GameActivity extends Activity {
     private Game game;
@@ -28,5 +29,11 @@ public class GameActivity extends Activity {
     protected void onRestart() {
         this.game.start();
         super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        SoundManager.release();
+        super.onDestroy();
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import kobzol.spaceships.controller.SpaceDirector;
+import kobzol.spaceships.sound.SoundManager;
 import kobzol.spaceships.ui.DisplayHelper;
 
 /**
@@ -55,6 +56,8 @@ public class LaserGun implements WeaponEmitter {
             newBullet.moveTo(this.location.x, this.location.y);
 
             this.bullets.add(newBullet);
+
+            SoundManager.LASER_SOUND.start();
 
             this.cooldown_timer = 0;
         }
