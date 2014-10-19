@@ -48,9 +48,21 @@ public class Game {
         SoundManager.initialize(context);
 
         this.gameCanvas = new GameCanvas(context);
-        this.spaceDirector = new SpaceDirector(context, this.gameCanvas);
+        this.spaceDirector = new SpaceDirector(context, this);
 
         this.context = context;
+    }
+
+    public GameCanvas getGameCanvas() {
+        return this.gameCanvas;
+    }
+
+    /**
+     * Determines if the game is currently running.
+     * @return true if the game is currently running, otherwise false
+     */
+    public boolean isRunning() {
+        return this.gameState.equals(GameState.RUNNING);
     }
 
     /**

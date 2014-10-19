@@ -76,8 +76,8 @@ public class PlayerDirector implements Director {
 
     @Override
     public boolean onInput(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_MOVE ||
-            event.getAction() == MotionEvent.ACTION_DOWN)
+        if (event.getActionMasked() == MotionEvent.ACTION_MOVE ||
+            event.getActionMasked() == MotionEvent.ACTION_DOWN)
         {
             this.lastClick = new PointF(this.playerShip.getLocation().x, event.getRawY());
             this.moveShip = true;

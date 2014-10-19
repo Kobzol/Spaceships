@@ -28,6 +28,7 @@ public class MenuDirector extends DisplayableObject implements Director {
 
     private final Bitmap menuImage;
     private final Bitmap fireButtonImage;
+    private final Bitmap pauseButtonImage;
     private final Paint textPaint;
 
     private int score = 0;
@@ -42,6 +43,7 @@ public class MenuDirector extends DisplayableObject implements Director {
 
         this.menuImage = DisplayHelper.loadBitmap(director.getContext(), R.drawable.menu);
         this.fireButtonImage = DisplayHelper.loadBitmap(director.getContext(), R.drawable.button);
+        this.pauseButtonImage = DisplayHelper.loadBitmap(director.getContext(), R.drawable.pause);
 
         this.textPaint = new Paint();
         this.textPaint.setColor(Color.WHITE);
@@ -60,6 +62,16 @@ public class MenuDirector extends DisplayableObject implements Director {
         fireButton.moveTo(this.getLocation().x, this.getLocation().y);
 
         this.buttons.add(fireButton);
+
+        MenuButton pauseButton = new MenuButton(new Dimension(100, 100), new MenuAction() {
+            @Override
+            public void onButtonClicked(MenuButton button) {
+                menuAction.onPauseButtonClicked();
+            }
+        });
+        pauseButton.moveTo(this.getLocation().x, this.getDimension().getHeight() - pauseButton.getDimension().getHeight());
+
+        this.buttons.add(pauseButton);
     }
 
     public void setScore(int score) {
@@ -91,6 +103,7 @@ public class MenuDirector extends DisplayableObject implements Director {
     public void draw(Canvas canvas, float interpolation) {
         RenderingCollection.renderCenteredBitmap(this, this.menuImage, canvas, interpolation);
         RenderingCollection.renderCenteredBitmap(this.buttons.get(0), this.fireButtonImage, canvas, interpolation);
+        RenderingCollection.renderCenteredBitmap(this.buttons.get(1), this.pauseButtonImage, canvas, interpolation);
         canvas.drawText("Score: " + this.score, this.getLocation().x - this.getDimension().getWidth() / 2 + 20, 40, this.textPaint);
     }
 }
