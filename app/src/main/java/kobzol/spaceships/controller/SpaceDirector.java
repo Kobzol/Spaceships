@@ -80,7 +80,7 @@ public class SpaceDirector implements Director {
         {
             for (Asteroid asteroid : this.asteroidGenerator.getAsteroids())
             {
-                if (DisplayHelper.getRectangle(bullet).intersect(DisplayHelper.getRectangle(asteroid)))
+                if (DisplayHelper.getRectangle(bullet).intersect(DisplayHelper.getRectangle(asteroid)) && !asteroid.isExploding())
                 {
                     this.asteroidGenerator.onAsteroidHit(asteroid);
                     this.playerDirector.getBullets().remove(bullet);
@@ -147,11 +147,16 @@ public class SpaceDirector implements Director {
     public boolean onInput(MotionEvent event) {
         for (int i = 0; i < event.getPointerCount(); i++)
         {
-            event.setLocation(event.getX(event.getPointerId(i)), event.getY(event.getPointerId(i)));
-
-            if (!this.menuDirector.onInput(event))
+            if (i < event.getPointerCount())
             {
-                this.playerDirector.onInput(event);
+                int id = event.getPointerId(i);
+
+                event.setLocation(event.getX(id), event.getY(id));
+
+                if (!this.menuDirector.onInput(event))
+                {
+                    this.playerDirector.onInput(event);
+                }
             }
         }
 

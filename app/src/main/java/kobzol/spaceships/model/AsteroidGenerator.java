@@ -14,6 +14,7 @@ import kobzol.spaceships.R;
 import kobzol.spaceships.controller.Director;
 import kobzol.spaceships.controller.SpaceDirector;
 import kobzol.spaceships.graphics.Animation;
+import kobzol.spaceships.sound.SoundManager;
 import kobzol.spaceships.ui.DisplayHelper;
 import kobzol.spaceships.view.RenderingCollection;
 
@@ -21,7 +22,6 @@ import kobzol.spaceships.view.RenderingCollection;
  * Asteroid generator that creates new asteroids randomly.
  */
 public class AsteroidGenerator implements Director {
-    private static final int GENERATE_ASTEROID_COOLDOWN = 200;
     private static final Dimension ASTEROID_DIMENSION = new Dimension(200, 200);
 
     private final SpaceDirector director;
@@ -31,7 +31,8 @@ public class AsteroidGenerator implements Director {
     private final Bitmap explosionImage;
     private final Random random;
 
-    private int generate_cooldown = GENERATE_ASTEROID_COOLDOWN;
+    private int generate_asteroid_cooldown = 200;
+    private int generate_cooldown = generate_asteroid_cooldown;
 
     private HashMap<Asteroid, Animation> animations = new HashMap<Asteroid, Animation>();
 
@@ -64,6 +65,13 @@ public class AsteroidGenerator implements Director {
 
             Animation animation = new Animation(this.explosionImage, 25, 2);
             this.animations.put(asteroid, animation);
+
+            if (this.generate_asteroid_cooldown > 50)
+            {
+                this.generate_asteroid_cooldown -= 10;
+            }
+
+            SoundManager.playSound(SoundManager.EXPLOSION_SOUND);
         }
     }
 
@@ -74,6 +82,8 @@ public class AsteroidGenerator implements Director {
         boolean findNewPosition;
 
         Asteroid newAsteroid = new Asteroid(AsteroidGenerator.ASTEROID_DIMENSION.copy());
+
+        int tries_left = 100;
 
         do
         {
@@ -91,16 +101,19 @@ public class AsteroidGenerator implements Director {
                 }
             }
         }
-        while (findNewPosition);
+        while (findNewPosition && tries_left-- > 0);
 
-        this.asteroids.add(newAsteroid);
+        if (tries_left != 0)
+        {
+            this.asteroids.add(newAsteroid);
+        }
     }
 
     @Override
     public void update() {
         this.generate_cooldown++;
 
-        if (this.generate_cooldown >= AsteroidGenerator.GENERATE_ASTEROID_COOLDOWN)
+        if (this.generate_cooldown >= this.generate_asteroid_cooldown)
         {
             this.generateAsteroid();
             this.generate_cooldown = 0;

@@ -11,10 +11,14 @@ import kobzol.spaceships.R;
  */
 public class SoundManager {
     public static MediaPlayer LASER_SOUND;
+    public static MediaPlayer EXPLOSION_SOUND;
 
     public static void initialize(Context context) {
         LASER_SOUND = MediaPlayer.create(context, R.raw.laser);
         LASER_SOUND.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        EXPLOSION_SOUND = MediaPlayer.create(context, R.raw.explosion);
+        EXPLOSION_SOUND.setAudioStreamType(AudioManager.STREAM_MUSIC);
     }
 
     public static void release() {
@@ -22,6 +26,12 @@ public class SoundManager {
         {
             LASER_SOUND.release();
             LASER_SOUND = null;
+        }
+
+        if (EXPLOSION_SOUND != null)
+        {
+            EXPLOSION_SOUND.release();
+            EXPLOSION_SOUND = null;
         }
     }
 
