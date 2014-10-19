@@ -1,6 +1,5 @@
 package kobzol.spaceships.graphics;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 
@@ -19,13 +18,13 @@ public class Animation {
     private final int spriteWidth;
     private final int columns;
 
-    public Animation(Context context, Bitmap bitmap, int steps, int tickMax) {
+    public Animation(Bitmap bitmap, int steps, int tickMax) {
         this.image = bitmap;
         this.steps = steps;
         this.tickMax = tickMax;
 
         this.columns = (int) Math.sqrt(steps);
-        this.spriteWidth = bitmap.getWidth() / this.columns;//bitmap.getScaledWidth(DisplayHelper.getDisplayMetrics(context)) / this.columns;
+        this.spriteWidth = bitmap.getWidth() / this.columns;
     }
 
     /**

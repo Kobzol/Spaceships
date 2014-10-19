@@ -62,7 +62,7 @@ public class AsteroidGenerator implements Director {
         {
             asteroid.causeExplosion();
 
-            Animation animation = new Animation(this.director.getContext(), this.explosionImage, 25, 2);
+            Animation animation = new Animation(this.explosionImage, 25, 2);
             this.animations.put(asteroid, animation);
         }
     }
