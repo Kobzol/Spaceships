@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -12,6 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import kobzol.spaceships.R;
 import kobzol.spaceships.controller.Director;
 import kobzol.spaceships.controller.SpaceDirector;
+import kobzol.spaceships.graphics.Animation;
 import kobzol.spaceships.ui.DisplayHelper;
 import kobzol.spaceships.view.RenderingCollection;
 
@@ -26,14 +28,18 @@ public class AsteroidGenerator implements Director {
     private final List<Asteroid> asteroids;
 
     private final Bitmap asteroidImage;
+    private final Bitmap explosionImage;
     private final Random random;
 
     private int generate_cooldown = GENERATE_ASTEROID_COOLDOWN;
+
+    private HashMap<Asteroid, Animation> animations = new HashMap<Asteroid, Animation>();
 
     public AsteroidGenerator(SpaceDirector director) {
         this.director = director;
         this.asteroids = new CopyOnWriteArrayList<Asteroid>();
         this.asteroidImage = DisplayHelper.loadBitmap(director.getContext(), R.drawable.asteroid);
+        this.explosionImage = DisplayHelper.loadBitmap(director.getContext(), R.drawable.explosion);
         this.random = new Random();
     }
 
@@ -49,6 +55,16 @@ public class AsteroidGenerator implements Director {
         return new PointF(
                 this.director.getGameCanvas().getDimension().getWidth(),
                 this.random.nextInt((int) this.director.getGameCanvas().getDimension().getHeight() - (int) AsteroidGenerator.ASTEROID_DIMENSION.getHeight()) + AsteroidGenerator.ASTEROID_DIMENSION.getHeight() / 2);
+    }
+
+    public void onAsteroidHit(Asteroid asteroid) {
+        if (!asteroid.isExploding())
+        {
+            asteroid.causeExplosion();
+
+            Animation animation = new Animation(this.director.getContext(), this.explosionImage, 25, 2);
+            this.animations.put(asteroid, animation);
+        }
     }
 
     /**
@@ -92,7 +108,15 @@ public class AsteroidGenerator implements Director {
 
         for (Asteroid asteroid : this.asteroids)
         {
-            asteroid.move();
+            if (this.animations.containsKey(asteroid))
+            {
+                if (this.animations.get(asteroid).isFinished())
+                {
+                    this.asteroids.remove(asteroid);
+                }
+                else this.animations.get(asteroid).advance();
+            }
+            else asteroid.move();
         }
     }
 
@@ -105,7 +129,14 @@ public class AsteroidGenerator implements Director {
     public void draw(Canvas canvas, float interpolation) {
         for (Asteroid asteroid : this.asteroids)
         {
-            RenderingCollection.renderCenteredBitmap(asteroid, this.asteroidImage, canvas, interpolation);
+            if (!asteroid.isExploding())
+            {
+                RenderingCollection.renderCenteredBitmap(asteroid, this.asteroidImage, canvas, interpolation);
+            }
+            else if (this.animations.containsKey(asteroid))
+            {
+                RenderingCollection.renderAnimation(asteroid, this.animations.get(asteroid), canvas, interpolation);
+            }
         }
     }
 }

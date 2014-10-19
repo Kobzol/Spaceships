@@ -82,7 +82,7 @@ public class SpaceDirector implements Director {
             {
                 if (DisplayHelper.getRectangle(bullet).intersect(DisplayHelper.getRectangle(asteroid)))
                 {
-                    this.asteroidGenerator.getAsteroids().remove(asteroid);
+                    this.asteroidGenerator.onAsteroidHit(asteroid);
                     this.playerDirector.getBullets().remove(bullet);
 
                     this.onAsteroidDestroyed();
