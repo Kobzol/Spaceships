@@ -85,7 +85,7 @@ public class MenuDirector extends DisplayableObject implements Director {
 
     @Override
     public boolean onInput(MotionEvent event) {
-        PointF clicked = new PointF(event.getRawX(), event.getRawY());
+        PointF clicked = new PointF(event.getX(), event.getY());
 
         for (MenuButton button : this.buttons)
         {

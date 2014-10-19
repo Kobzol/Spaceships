@@ -145,9 +145,14 @@ public class SpaceDirector implements Director {
 
     @Override
     public boolean onInput(MotionEvent event) {
-        if (!this.menuDirector.onInput(event))
+        for (int i = 0; i < event.getPointerCount(); i++)
         {
-            this.playerDirector.onInput(event);
+            event.setLocation(event.getX(event.getPointerId(i)), event.getY(event.getPointerId(i)));
+
+            if (!this.menuDirector.onInput(event))
+            {
+                this.playerDirector.onInput(event);
+            }
         }
 
         return true;

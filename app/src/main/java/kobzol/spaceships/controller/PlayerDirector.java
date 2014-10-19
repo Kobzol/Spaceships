@@ -79,7 +79,7 @@ public class PlayerDirector implements Director {
         if (event.getActionMasked() == MotionEvent.ACTION_MOVE ||
             event.getActionMasked() == MotionEvent.ACTION_DOWN)
         {
-            this.lastClick = new PointF(this.playerShip.getLocation().x, event.getRawY());
+            this.lastClick = new PointF(this.playerShip.getLocation().x, event.getY());
             this.moveShip = true;
         }
         else this.moveShip = false;
