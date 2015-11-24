@@ -151,11 +151,18 @@ public class SpaceDirector implements Director {
             {
                 int id = event.getPointerId(i);
 
-                event.setLocation(event.getX(id), event.getY(id));
-
-                if (!this.menuDirector.onInput(event))
+                try
                 {
-                    this.playerDirector.onInput(event);
+                    event.setLocation(event.getX(id), event.getY(id));
+
+                    if (!this.menuDirector.onInput(event))
+                    {
+                        this.playerDirector.onInput(event);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
                 }
             }
         }
